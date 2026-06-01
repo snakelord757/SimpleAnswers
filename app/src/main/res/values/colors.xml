@@ -1,0 +1,9 @@
+<resources>
+    <color name="ink">#17211B</color>
+    <color name="paper">#F8F7F1</color>
+    <color name="sage">#7A9B78</color>
+    <color name="mint">#DCE8D7</color>
+    <color name="clay">#C16F4F</color>
+    <color name="error_red">#B3261E</color>
+    <color name="soft_line">#DAD8CE</color>
+</resources>
