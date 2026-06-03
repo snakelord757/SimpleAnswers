@@ -13,7 +13,16 @@ class DeepseekRepositoryImpl(
     override suspend fun send(
         model: DeepseekModel,
         messages: List<ChatMessage>,
+        maxTokens: Int?,
+        stopSequence: String?,
     ): Result<ChatAnswer> = withContext(Dispatchers.IO) {
-        runCatching { apiClient.send(model = model, messages = messages) }
+        runCatching {
+            apiClient.send(
+                model = model,
+                messages = messages,
+                maxTokens = maxTokens,
+                stopSequence = stopSequence,
+            )
+        }
     }
 }

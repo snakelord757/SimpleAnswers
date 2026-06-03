@@ -2,6 +2,7 @@ package com.example.simpleanswers.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.simpleanswers.domain.model.AssistantRole
 import com.example.simpleanswers.domain.usecase.SendPromptUseCase
 import com.example.simpleanswers.ui.model.MainUiState
 import java.io.IOException
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val sendPromptUseCase: SendPromptUseCase,
+    private val roleOverride: AssistantRole? = null,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MainUiState())
     val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
@@ -25,7 +27,7 @@ class MainViewModel(
         viewModelScope.launch {
             _uiState.update { it.copy(answer = "", isLoading = true, error = null) }
 
-            sendPromptUseCase(prompt)
+            sendPromptUseCase(prompt, roleOverride)
                 .onSuccess { answer ->
                     _uiState.update {
                         it.copy(answer = answer.content, isLoading = false, error = null)

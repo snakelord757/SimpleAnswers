@@ -8,4 +8,7 @@ interface SettingsRepository {
     fun getSettings(): AppSettings
     fun saveModel(model: DeepseekModel)
     fun saveRole(role: AssistantRole)
+    fun saveMaxTokens(maxTokens: Int?)
+    fun saveStopSequence(stopSequence: String)
+    fun saveFinishInstruction(finishInstruction: String)
 }

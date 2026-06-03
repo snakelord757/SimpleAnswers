@@ -17,6 +17,13 @@ enum class AssistantRole(
         displayName = "Ассистент",
         systemPrompt = "You are a helpful general assistant. Answer clearly, accurately, and to the point.",
     ),
+    WebAssistant(
+        storageName = "web_assistant",
+        displayName = "Ассистент (Web)",
+        systemPrompt = "You are a helpful assistant that always responds with complete, valid HTML markup. " +
+            "Return only HTML without Markdown fences or explanations outside the document. " +
+            "Use semantic tags, inline CSS when useful, UTF-8 text, and a responsive layout suitable for Android WebView.",
+    ),
     WiseGorilla(
         storageName = "wise_gorilla",
         displayName = "Мудрая горилла",

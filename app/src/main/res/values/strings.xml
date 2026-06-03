@@ -3,14 +3,45 @@
     <string name="prompt_hint">Спросите Deepseek</string>
     <string name="send">Отправить</string>
     <string name="empty_answer">Ответ появится здесь</string>
+    <string name="empty_web_answer"><![CDATA[
+        <!doctype html>
+        <html>
+            <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                    body { margin: 0; padding: 18px; color: #17211B; font-family: sans-serif; line-height: 1.45; background: #FFFFFF; }
+                </style>
+            </head>
+            <body>HTML-ответ появится здесь</body>
+        </html>
+    ]]></string>
     <string name="loading_answer">Deepseek размышляет…</string>
+    <string name="loading_web_answer"><![CDATA[
+        <!doctype html>
+        <html>
+            <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                    body { margin: 0; padding: 18px; color: #17211B; font-family: sans-serif; line-height: 1.45; background: #FFFFFF; }
+                </style>
+            </head>
+            <body><strong>Deepseek размышляет…</strong></body>
+        </html>
+    ]]></string>
     <string name="settings">Настройки</string>
     <string name="back">Назад</string>
     <string name="model_title">Модель Deepseek</string>
     <string name="role_title">Роль ассистента</string>
+    <string name="limits_title">Ограничения ответа</string>
+    <string name="web_mode_title">Simple Answers Web</string>
+    <string name="open_web_mode">Перейти в режим Web</string>
     <string name="model_flash">deepseek-v4-flash</string>
     <string name="model_pro">deepseek-v4-pro</string>
     <string name="role_philosopher">Китайский философ</string>
     <string name="role_assistant">Ассистент</string>
+    <string name="role_web_assistant">Ассистент (Web)</string>
     <string name="role_gorilla">Мудрая горилла</string>
+    <string name="max_tokens_hint">Максимум токенов, 0 - без ограничения</string>
+    <string name="stop_sequence_hint">Stop sequence</string>
+    <string name="finish_instruction_hint">Инструкция завершения</string>
 </resources>

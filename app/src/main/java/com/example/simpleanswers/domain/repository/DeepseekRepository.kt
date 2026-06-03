@@ -8,5 +8,7 @@ interface DeepseekRepository {
     suspend fun send(
         model: DeepseekModel,
         messages: List<ChatMessage>,
+        maxTokens: Int?,
+        stopSequence: String?,
     ): Result<ChatAnswer>
 }

@@ -8,6 +8,9 @@ data class DeepseekChatRequest(
     val model: String,
     val messages: List<DeepseekMessageDto>,
     val stream: Boolean = false,
+    @SerialName("max_tokens")
+    val maxTokens: Int? = null,
+    val stop: String? = null,
 )
 
 @Serializable

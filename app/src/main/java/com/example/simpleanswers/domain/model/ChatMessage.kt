@@ -6,7 +6,6 @@ data class ChatMessage(
 ) {
     enum class Role(val apiName: String) {
         System("system"),
-        User("user"),
-        Assistant("assistant"),
+        User("user")
     }
 }
