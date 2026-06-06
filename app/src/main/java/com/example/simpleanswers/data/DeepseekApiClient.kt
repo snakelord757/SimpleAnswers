@@ -5,6 +5,7 @@ import com.example.simpleanswers.data.network.DeepseekApiService
 import com.example.simpleanswers.data.network.DeepseekChatRequest
 import com.example.simpleanswers.data.network.DeepseekMessageDto
 import com.example.simpleanswers.data.network.DeepseekResponseLoggingInterceptor
+import com.example.simpleanswers.data.network.DeepseekThinkingDto
 import com.example.simpleanswers.domain.model.ChatAnswer
 import com.example.simpleanswers.domain.model.ChatMessage
 import com.example.simpleanswers.domain.model.DeepseekModel
@@ -25,6 +26,8 @@ class DeepseekApiClient(
         messages: List<ChatMessage>,
         maxTokens: Int?,
         stopSequence: String?,
+        temperature: Float,
+        thinkingEnabled: Boolean,
     ): ChatAnswer {
         require(apiKey.isNotBlank()) { "Добавьте DEEPSEEK_API_KEY в local.properties" }
 
@@ -38,6 +41,8 @@ class DeepseekApiClient(
             },
             maxTokens = maxTokens?.takeIf { it > 0 },
             stop = stopSequence?.takeIf(String::isNotBlank),
+            temperature = temperature.takeUnless { thinkingEnabled },
+            thinking = DeepseekThinkingDto(type = if (thinkingEnabled) THINKING_ENABLED else THINKING_DISABLED),
         )
 
         val response = apiService.sendMessage(
@@ -61,7 +66,8 @@ class DeepseekApiClient(
 
         Log.i(
             TAG,
-            "Deepseek parsed answer: model=${model.apiName}, finishReason=${choice.finishReason}, content=$content",
+            "Deepseek parsed answer: model=${model.apiName}, thinkingEnabled=$thinkingEnabled, " +
+                "temperature=${temperature.takeUnless { thinkingEnabled }}, finishReason=${choice.finishReason}, content=$content",
         )
 
         return ChatAnswer(content = content)
@@ -71,6 +77,8 @@ class DeepseekApiClient(
         const val TAG = "DeepseekApiClient"
         const val DEEPSEEK_BASE_URL = "https://api.deepseek.com/"
         const val TIMEOUT_SECONDS = 30L
+        const val THINKING_ENABLED = "enabled"
+        const val THINKING_DISABLED = "disabled"
 
         fun createApiService(): DeepseekApiService {
             val json = Json {

@@ -10,5 +10,7 @@ interface DeepseekRepository {
         messages: List<ChatMessage>,
         maxTokens: Int?,
         stopSequence: String?,
+        temperature: Float,
+        thinkingEnabled: Boolean,
     ): Result<ChatAnswer>
 }

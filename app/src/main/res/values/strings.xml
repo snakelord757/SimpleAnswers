@@ -33,6 +33,10 @@
     <string name="model_title">Модель Deepseek</string>
     <string name="role_title">Роль ассистента</string>
     <string name="limits_title">Ограничения ответа</string>
+    <string name="thinking_mode_title">Режим Thinking</string>
+    <string name="temperature_title">Температура</string>
+    <string name="temperature_hint">0.0 - самый стабильный режим, 2.0 - максимум вариативности</string>
+    <string name="temperature_thinking_disabled_hint">Не поддерживается при активном режиме Thinking. Для изменения параметра temperature сначала отключите режим Thinking</string>
     <string name="web_mode_title">Simple Answers Web</string>
     <string name="open_web_mode">Перейти в режим Web</string>
     <string name="model_flash">deepseek-v4-flash</string>

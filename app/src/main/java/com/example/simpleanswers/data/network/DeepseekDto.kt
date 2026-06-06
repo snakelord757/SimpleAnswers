@@ -11,6 +11,13 @@ data class DeepseekChatRequest(
     @SerialName("max_tokens")
     val maxTokens: Int? = null,
     val stop: String? = null,
+    val temperature: Float? = null,
+    val thinking: DeepseekThinkingDto? = null,
+)
+
+@Serializable
+data class DeepseekThinkingDto(
+    val type: String,
 )
 
 @Serializable

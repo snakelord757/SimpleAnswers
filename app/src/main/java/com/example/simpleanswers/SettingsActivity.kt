@@ -11,6 +11,11 @@ import com.example.simpleanswers.data.SettingsPreferencesRepository
 import com.example.simpleanswers.databinding.ActivitySettingsBinding
 import com.example.simpleanswers.domain.model.AssistantRole
 import com.example.simpleanswers.domain.model.DeepseekModel
+import com.example.simpleanswers.domain.model.MAX_TEMPERATURE
+import com.example.simpleanswers.domain.model.MIN_TEMPERATURE
+import com.example.simpleanswers.domain.model.TEMPERATURE_STEP
+import java.util.Locale
+import kotlin.math.roundToInt
 
 class SettingsActivity : ComponentActivity() {
     private lateinit var binding: ActivitySettingsBinding
@@ -100,6 +105,13 @@ class SettingsActivity : ComponentActivity() {
         binding.maxTokensEditText.setText((settings.maxTokens ?: 0).toString())
         binding.stopSequenceEditText.setText(settings.stopSequence)
         binding.finishInstructionEditText.setText(settings.finishInstruction)
+        binding.thinkingModeSwitch.isChecked = settings.thinkingEnabled
+        binding.temperatureSlider.valueFrom = MIN_TEMPERATURE
+        binding.temperatureSlider.valueTo = MAX_TEMPERATURE
+        binding.temperatureSlider.stepSize = TEMPERATURE_STEP
+        binding.temperatureSlider.value = settings.temperature
+        renderTemperature(settings.temperature)
+        renderTemperatureAvailability(settings.thinkingEnabled)
     }
 
     private fun bindModelSelection() {
@@ -138,6 +150,39 @@ class SettingsActivity : ComponentActivity() {
         binding.finishInstructionEditText.doAfterTextChanged { editable ->
             settingsRepository.saveFinishInstruction(editable?.toString().orEmpty())
         }
+        binding.thinkingModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            settingsRepository.saveThinkingEnabled(isChecked)
+            renderTemperatureAvailability(isChecked)
+        }
+        binding.temperatureSlider.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) {
+                val normalizedValue = value.roundToTemperatureStep()
+                settingsRepository.saveTemperature(normalizedValue)
+                renderTemperature(normalizedValue)
+            }
+        }
+    }
+
+    private fun renderTemperature(temperature: Float) {
+        binding.temperatureValueText.text = String.format(
+            Locale.US,
+            "%.1f",
+            temperature.roundToTemperatureStep(),
+        )
+    }
+
+    private fun renderTemperatureAvailability(thinkingEnabled: Boolean) {
+        binding.temperatureSlider.isEnabled = !thinkingEnabled
+        binding.temperatureHeader.isEnabled = !thinkingEnabled
+        binding.temperatureValueText.isEnabled = !thinkingEnabled
+        binding.temperatureTitle.isEnabled = !thinkingEnabled
+        binding.temperatureHint.isEnabled = !thinkingEnabled
+        binding.temperatureThinkingMessage.visibility = if (thinkingEnabled) View.VISIBLE else View.GONE
+    }
+
+    private fun Float.roundToTemperatureStep(): Float {
+        val steps = (this / TEMPERATURE_STEP).roundToInt()
+        return (steps * TEMPERATURE_STEP).coerceIn(MIN_TEMPERATURE, MAX_TEMPERATURE)
     }
 
     private companion object {

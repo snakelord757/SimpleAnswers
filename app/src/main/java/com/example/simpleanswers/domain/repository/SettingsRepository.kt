@@ -11,4 +11,6 @@ interface SettingsRepository {
     fun saveMaxTokens(maxTokens: Int?)
     fun saveStopSequence(stopSequence: String)
     fun saveFinishInstruction(finishInstruction: String)
+    fun saveTemperature(temperature: Float)
+    fun saveThinkingEnabled(enabled: Boolean)
 }

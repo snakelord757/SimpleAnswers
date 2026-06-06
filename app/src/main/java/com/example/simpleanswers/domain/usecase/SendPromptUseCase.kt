@@ -34,15 +34,25 @@ class SendPromptUseCase(
             ),
             maxTokens = settings.maxTokens,
             stopSequence = settings.stopSequence.takeIf(String::isNotBlank),
+            temperature = settings.temperature,
+            thinkingEnabled = settings.thinkingEnabled,
         )
     }
 
     private fun AppSettings.toSystemPrompt(role: AssistantRole): String {
         val finishRule = finishInstruction.trim()
-        return if (finishRule.isEmpty()) {
-            role.systemPrompt
-        } else {
-            role.systemPrompt + "\n\nAdditional completion rule: " + finishRule
+        return buildString {
+            append(BASE_SYSTEM_PROMPT)
+            append("\n\n")
+            append(role.systemPrompt)
+            if (finishRule.isNotEmpty()) {
+                append("\n\nAdditional completion rule: ")
+                append(finishRule)
+            }
         }
+    }
+
+    private companion object {
+        const val BASE_SYSTEM_PROMPT = "Always answer in Russian."
     }
 }

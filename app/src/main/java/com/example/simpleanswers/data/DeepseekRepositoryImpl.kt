@@ -15,6 +15,8 @@ class DeepseekRepositoryImpl(
         messages: List<ChatMessage>,
         maxTokens: Int?,
         stopSequence: String?,
+        temperature: Float,
+        thinkingEnabled: Boolean,
     ): Result<ChatAnswer> = withContext(Dispatchers.IO) {
         runCatching {
             apiClient.send(
@@ -22,6 +24,8 @@ class DeepseekRepositoryImpl(
                 messages = messages,
                 maxTokens = maxTokens,
                 stopSequence = stopSequence,
+                temperature = temperature,
+                thinkingEnabled = thinkingEnabled,
             )
         }
     }
